@@ -1,4 +1,4 @@
-package com.example.simpleboard.board;
+package com.example.simpleboard.service;
 
 import com.example.simpleboard.dto.request.BoardWriteRequest;
 import com.example.simpleboard.entity.Board;
@@ -7,6 +7,7 @@ import com.example.simpleboard.exception.CustomException;
 import com.example.simpleboard.exception.ErrorCode;
 import com.example.simpleboard.repository.BoardRepository;
 import com.example.simpleboard.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public void saveBoard(BoardWriteRequest boardWriteRequest) {
         Member member = memberRepository.findById(boardWriteRequest.getUserId())
                                         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -29,5 +31,12 @@ public class BoardService {
                         .build();
 
         boardRepository.save(board);
+    }
+
+    @Transactional
+    public Board getBoardDetail(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
+        board.increaseViewCnt();
+        return board;
     }
 }
