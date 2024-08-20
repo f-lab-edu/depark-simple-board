@@ -38,4 +38,8 @@ public class Board extends BaseEntity {
         this.contents = contents;
         this.viewCnt = viewCnt;
     }
+
+    public void increaseViewCnt() {
+        this.viewCnt++;
+    }
 }
