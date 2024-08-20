@@ -1,6 +1,7 @@
 package com.example.simpleboard.controller;
 
 import com.example.simpleboard.dto.BoardListDto;
+import com.example.simpleboard.dto.request.BoardRatingSaveRequest;
 import com.example.simpleboard.service.BoardService;
 import com.example.simpleboard.dto.request.BoardWriteRequest;
 import com.example.simpleboard.dto.response.BaseResponseBody;
@@ -39,6 +40,13 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<BaseResponseBody> saveBoard(@RequestBody BoardWriteRequest boardWriteRequest) {
         boardService.saveBoard(boardWriteRequest);
+
+        return ResponseEntity.ok(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PostMapping("/rating")
+    public ResponseEntity<BaseResponseBody> saveBoardRating(@RequestBody BoardRatingSaveRequest boardRatingSaveRequest) {
+        boardService.saveBoardRating(boardRatingSaveRequest);
 
         return ResponseEntity.ok(BaseResponseBody.of(200, "Success"));
     }
