@@ -9,6 +9,8 @@ import com.example.simpleboard.repository.BoardRepository;
 import com.example.simpleboard.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,5 +40,10 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
         board.increaseViewCnt();
         return board;
+    }
+
+    @Transactional
+    public Page<Board> getBoardList(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 }
