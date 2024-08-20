@@ -18,7 +18,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<? extends BaseResponseBody> getBoardDetail(@PathVariable Long boardId) {
+    public ResponseEntity<DataResponse> getBoardDetail(@PathVariable Long boardId) {
         Board boardDetail = boardService.getBoardDetail(boardId);
 
         return ResponseEntity.ok(DataResponse.of(200, "Success", BoardDetailDto.of(boardDetail)));
