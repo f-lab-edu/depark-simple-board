@@ -15,8 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public ResponseEntity<? extends BaseResponseBody> getBoardList(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<DataResponse> getBoardList(@RequestParam int page, @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("boardId").descending());
         Page<Board> boardList = boardService.getBoardList(pageable);
         return ResponseEntity.ok(DataResponse.of(200, "Success", boardList.map(BoardListDto::of)));
