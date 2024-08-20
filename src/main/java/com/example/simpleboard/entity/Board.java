@@ -8,7 +8,6 @@ import lombok.*;
 @Table(name = "BOARD")
 @NoArgsConstructor
 @Getter
-@Setter
 @ToString(callSuper = true)
 public class Board extends BaseEntity {
 
@@ -30,6 +29,9 @@ public class Board extends BaseEntity {
     @Column(name = "VIEW_CNT")
     private Integer viewCnt;
 
+    @Column(name = "AVG_SCORE")
+    private Float avgScore;
+
     @Builder
     public Board(Long boardId, String title, Member member, String contents, Integer viewCnt) {
         this.boardId = boardId;
@@ -41,5 +43,9 @@ public class Board extends BaseEntity {
 
     public void increaseViewCnt() {
         this.viewCnt++;
+    }
+
+    public void updateAvgScore(Float avgScore) {
+        this.avgScore = avgScore;
     }
 }
